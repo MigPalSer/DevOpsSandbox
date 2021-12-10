@@ -21,6 +21,10 @@
       </plugin>
     </plugins>
   </build>
+  <properties>
+   <java.version>11</java.version>
+  </properties>
+  
   <dependencies>
   <!-- https://mvnrepository.com/artifact/junit/junit -->
 <dependency>
