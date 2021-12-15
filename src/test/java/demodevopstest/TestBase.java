@@ -9,7 +9,6 @@ public class TestBase {
 	@Test
 	public void test() {
 		assertTrue(false);
-		//Test change
 	}
 
 	@Test
