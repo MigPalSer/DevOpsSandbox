@@ -6,6 +6,6 @@ EXPOSE 8080
 
 RUN rm -rf ./webapps/*
 
-ADD ./target/demodevops-0.0.1.war /usr/local/tomcat/webapps/ROOT.war
+ADD ./target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 CMD ["catalina.sh", "run"]

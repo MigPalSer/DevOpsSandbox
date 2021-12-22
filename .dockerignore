@@ -1,0 +1,5 @@
+# Ignora .bak de notepad++
+*.bak
+# /*
+# /.git/
+# !target/*.war

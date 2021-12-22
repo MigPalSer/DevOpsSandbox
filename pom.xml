@@ -11,7 +11,9 @@
 
 
 	<properties>
-        		<!--TODO -->
+        		  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
 	</properties>
 
 	<build>
@@ -39,6 +41,7 @@
 				</configuration>
 			</plugin>
 
+
 		</plugins>
 	</build>
 
@@ -50,6 +53,14 @@
 			<version>4.13</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin -->
+<dependency>
+    <groupId>io.fabric8</groupId>
+    <artifactId>docker-maven-plugin</artifactId>
+    <version>0.38.1</version>
+</dependency>
+		
 	</dependencies>
 	
 	    <profiles>
@@ -57,9 +68,41 @@
         <id>tomcat-mvn-deployment</id>
         		<!--TODO -->
       </profile>
+      
           <profile>
-        <id>docker-mvn-deployment</id>
-                <!--TODO -->
+        <id>localdocker</id>
+	<build>
+	<plugins>
+	
+
+		<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.38.1</version>
+
+				<configuration>
+                    <dockerHost>tcp://localhost:2375/</dockerHost> 
+
+                    <verbose>true</verbose>
+					<images>
+						<image>
+							<name>migpalser/demodevops</name>
+							<build>
+						
+								<dockerFileDir>${project.basedir}</dockerFileDir>
+								<assembly>
+									<descriptorRef>artifact-with-dependencies</descriptorRef>
+								</assembly>
+								<tags>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>  
+	
+	</plugins> </build>
       </profile>
     </profiles>
 </project>
