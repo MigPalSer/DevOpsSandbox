@@ -11,7 +11,7 @@
 
 
 	<properties>
-        		  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
 	</properties>
@@ -26,20 +26,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
 			</plugin>
-			<plugin>
-				<!-- TODO arreglar -->
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<update>true</update>
-					<server>tomcatserver</server>
-					<url>https://localhost:8081/manager/text</url>
-					<path>/demodevops2</path>
-					<username>admin</username>
-					<password>admin</password>
-				</configuration>
-			</plugin>
+
 
 
 		</plugins>
@@ -53,56 +40,72 @@
 			<version>4.13</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin -->
-<dependency>
-    <groupId>io.fabric8</groupId>
-    <artifactId>docker-maven-plugin</artifactId>
-    <version>0.38.1</version>
-</dependency>
-		
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>docker-maven-plugin</artifactId>
+			<version>0.38.1</version>
+		</dependency>
+
 	</dependencies>
-	
-	    <profiles>
-      <profile>
-        <id>tomcat-mvn-deployment</id>
-        		<!--TODO -->
-      </profile>
-      
-          <profile>
-        <id>localdocker</id>
-	<build>
-	<plugins>
-	
 
-		<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.38.1</version>
+	<profiles>
+		<profile>
+			<id>tomcat-mvn-deployment</id>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- TODO arreglar -->
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<update>true</update>
+							<server>tomcatserver</server>
+							<url>https://localhost:8081/manager/text</url>
+							<path>/demodevops2</path>
+							<username>admin</username>
+							<password>admin</password>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-				<configuration>
-                    <dockerHost>tcp://localhost:2375/</dockerHost> 
+		<profile>
+			<id>localdocker</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.38.1</version>
 
-                    <verbose>true</verbose>
-					<images>
-						<image>
-							<name>migpalser/demodevops</name>
-							<build>
-						
-								<dockerFileDir>${project.basedir}</dockerFileDir>
-								<assembly>
-									<descriptorRef>artifact-with-dependencies</descriptorRef>
-								</assembly>
-								<tags>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-						</image>
-					</images>
-				</configuration>
-			</plugin>  
-	
-	</plugins> </build>
-      </profile>
-    </profiles>
+						<configuration>
+							<dockerHost>tcp://localhost:2375/</dockerHost>
+
+							<verbose>true</verbose>
+							<images>
+								<image>
+									<name>migpalser/demodevops</name>
+									<build>
+
+										<dockerFileDir>${project.basedir}</dockerFileDir>
+										<assembly>
+											<descriptorRef>artifact-with-dependencies</descriptorRef>
+										</assembly>
+										<tags>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+								</image>
+							</images>
+						</configuration>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
